@@ -16,8 +16,8 @@ class Container implements \ArrayAccess {
      * It gives the developer more freedom to specify specifically what should happen
      * when registering an item.
      *
-     * @param string $name     - registered item's name.
-     * @param callable $func   - registered callable.
+     * @param  string $name     - registered item's name.
+     * @param  callable $func   - registered callable.
      * @return Container $this - instance of Container
      * @throws InvalidArgumentException
      */
@@ -36,7 +36,7 @@ class Container implements \ArrayAccess {
     /**
      * Does the item exist in the container?
      *
-     * @param string $name - name of item in the container.
+     * @param  string $name - name of item in the container.
      * @return boolean
      */
     public function offsetExists($name): bool {
@@ -55,15 +55,11 @@ class Container implements \ArrayAccess {
     /**
      * Get the object from the container based on name.
      *
-     * @param string $name - The name of the object in the container.
+     * @param  string $name - The name of the object in the container.
      * @return callable or false.
      */
     public function offsetGet($name) {
-        if ($this->offsetExists($name)) {
-            return call_user_func($this->_container[$name]);
-        }
-
-        return false;
+        return $this->_container[$name]();
     }
 
     /**
@@ -73,5 +69,36 @@ class Container implements \ArrayAccess {
      */
     public function getContainer(): array {
         return $this->_container;
+    }
+
+    /**
+     * Get the raw container object.
+     *
+     * The class definition returned via this call will
+     * consititue as the raw return value.
+     *
+     * This is the non instantiated return value.
+     *
+     * @param  string $name - name of the container object
+     * @return class deffinition
+     * @throws InvalidArgumentException
+     */
+    public function raw(string $name) {
+        if (!$this->_container[$name]) {
+            throw new \InvalidArgumentException($name . ' Does not exist in the container.');
+        }
+
+        return $this->_container[$name];
+    }
+
+    public function extend(string $name, callable $callback) {
+
+        $object = $this->_container[$name];
+
+        $extend = function() use ($callback, $object) {
+            return $callback($object());
+        };
+        
+        $this[$name] = $extend;
     }
 }

@@ -54,4 +54,46 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 
         $container['service'] = 'sam';
     }
+
+    public function testGetRaw() {
+        $container = new Container();
+
+        $container['service'] = function() {
+            return new Service();
+        };
+
+        $this->assertInstanceOf(IceCreamDI\Tests\Fixtures\Service::class, $container->raw('service'));
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFailToGetRaw() {
+        $container = new Container();
+
+        $this->assertInstanceOf(IceCreamDI\Tests\Fixtures\Service::class, $container->raw('other'));
+    }
+
+    /**
+     * @group extend
+     */
+    public function testExtendable() {
+        $container = new Container();
+
+        $container['service'] = function() {
+            return new Service();
+        };
+
+        $container->extend('service', function($service) {
+            $service->example = 'hello';
+
+            return $service;
+        });
+
+        var_dump($container['service']);
+
+        //var_dump($container['service']);
+        // $this->assertInstanceOf(IceCreamDI\Tests\Fixtures\Service::class, $container['service']);
+        // $this->assertEquals('hello', $container['service']->example);
+    }
 }
