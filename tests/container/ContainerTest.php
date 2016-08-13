@@ -90,10 +90,7 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
             return $service;
         });
 
-        var_dump($container['service']);
-
-        //var_dump($container['service']);
-        // $this->assertInstanceOf(IceCreamDI\Tests\Fixtures\Service::class, $container['service']);
-        // $this->assertEquals('hello', $container['service']->example);
+        $this->assertInstanceOf(IceCreamDI\Tests\Fixtures\Service::class, $container['service']);
+        $this->assertEquals('hello', $container['service']->example);
     }
 }
