@@ -4,7 +4,17 @@ namespace IceCreamDI;
 
 class Container implements \ArrayAccess {
 
-    private $_container = [];
+    private $_container    = [];
+    private $_frozenInTime = [];
+    private $_factoryContainer;
+
+    public function __construct(array $values = []) {
+        $this->_factoryContainer = new \SplObjectStorage();
+
+        foreach ($values as $valueName => $value) {
+            $this->offsetSet($valueName, $value);
+        }
+    }
 
     /**
      * Register a callable function to the container.
@@ -16,21 +26,17 @@ class Container implements \ArrayAccess {
      * It gives the developer more freedom to specify specifically what should happen
      * when registering an item.
      *
-     * @param  string $name     - registered item's name.
+     * @param  string $name     - registered item's name. Needs to be unique.
      * @param  callable $func   - registered callable.
-     * @return Container $this - instance of Container
+     * @return Container $this  - instance of Container
      * @throws InvalidArgumentException
      */
-    public function offsetSet($name, $func): Container {
-        if (!is_callable($func)) {
-            throw new \InvalidArgumentException($func . ' is not callable. You can only register closures.');
+    public function offsetSet($name, $func) {
+        if (isset($this->_frozenInTime[$name])) {
+            throw new \InvalidArgumentException($name . 'is frozen and cannot be manipulated or overridden.');
         }
 
-        if (!$this->offsetExists($name)) {
-            $this->_container[$name] = $func;
-        }
-
-        return $this;
+        $this->_container[$name] = $func;
     }
 
     /**
@@ -49,16 +55,35 @@ class Container implements \ArrayAccess {
      * @param string $name - name of item to be removed.
      */
     public function offsetUnset($name) {
+        unset($this->_frozenInTime[$name]);
         unset($this->_container[$name]);
     }
 
     /**
      * Get the object from the container based on name.
      *
+     * If the same object exists in the factory container we will return that
+     * instead.
+     *
      * @param  string $name - The name of the object in the container.
      * @return callable or false.
      */
     public function offsetGet($name) {
+
+        if (!isset($this->_container[$name])) {
+            throw new \InvalidArgumentException($name . ' is not registered any where in the container.');
+        }
+
+        if (!is_object($this->_container[$name])) {
+            return $this->_container[$name];
+        }
+
+        if (isset($this->_factoryContainer[$this->_container[$name]])) {
+            return $this->_container[$name]();
+        }
+
+        $this->_frozenInTime[$name] = true;
+
         return $this->_container[$name]();
     }
 
@@ -84,21 +109,39 @@ class Container implements \ArrayAccess {
      * @throws InvalidArgumentException
      */
     public function raw(string $name) {
-        if (!$this->_container[$name]) {
+        if (!isset($this->_container[$name])) {
             throw new \InvalidArgumentException($name . ' Does not exist in the container.');
         }
 
         return $this->_container[$name];
     }
 
-    public function extend(string $name, callable $callback) {
+    /**
+     * Allows you to create callable factories.
+     *
+     * @param  callable $callable - closure
+     * @return callable
+     * @throws InvalidArgumentException
+     */
+    public function createFactory(callable $callable): callable {
+        $this->_factoryContainer->attach($callable);
 
+        return $callable;
+    }
+
+    /**
+     * Allows you to extend a registered object in the container.
+     *
+     * @param String $name          - Name of item in container
+     * @param Callable $callable    - closure function
+     */
+    public function extend(string $name, callable $callback) {
         $object = $this->_container[$name];
 
         $extend = function() use ($callback, $object) {
             return $callback($object());
         };
-        
+
         $this[$name] = $extend;
     }
 }

@@ -6,6 +6,11 @@ use IceCreamDI\Tests\Fixtures\Service;
 
 class ContainerTest extends \PHPUnit_Framework_TestCase {
 
+    public function testRegisterParamsViaConstructor() {
+        $container = new Container(['param' => 'foo']);
+        $this->assertEquals('foo', $container['param']);
+    }
+
     public function testContainerIsEmpty() {
         $container = new Container();
 
@@ -43,7 +48,6 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
         unset($container['service']);
 
         $this->assertFalse(isset($container['service']));
-        $this->assertFalse($container['service']);
     }
 
     /**
@@ -52,17 +56,63 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
     public function testThrowInvalidArgumentException() {
         $container = new Container();
 
-        $container['service'] = 'sam';
+        $container['service'] = function() {
+            return new Service();
+        };
+
+        $service = $container['service'];
+
+        $container->extend('service', function($service) {
+            $service->example = 'hello';
+            return $service;
+        });
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testContainerNotRegistered() {
+        $container = new Container();
+        $container['service'];
+    }
+
+    public function testGetFactory() {
+        $container = new Container();
+        $container['service'] = $container->createFactory(function(){ return new Service(); });
+
+        $service = $container['service'];
+
+        $this->assertInstanceOf(IceCreamDI\Tests\Fixtures\Service::class, $container['service']);
+    }
+
+    public function testNotTheSameFactory() {
+        $container = new Container();
+        $container['service'] = $container->createFactory(function(){ return new Service(); });
+
+        $service    = $container['service'];
+        $serviceTwo = $container['service'];
+
+        $this->assertNotSame($service, $serviceTwo);
+    }
+
+    public function assertIsSame() {
+        $container            = new Container();
+        $container['service'] = function() {
+            return new Service();
+        };
+
+        $service    = $container['service'];
+        $serviceTwo = $container['service'];
+
+        $this->assertSame($service, $serviceTwo);
     }
 
     public function testGetRaw() {
         $container = new Container();
 
-        $container['service'] = function() {
-            return new Service();
-        };
+        $container['service'] = $service = $container->createFactory(function() { return 'hey'; });
 
-        $this->assertInstanceOf(IceCreamDI\Tests\Fixtures\Service::class, $container->raw('service'));
+        $this->assertSame($service, $container->raw('service'));
     }
 
     /**
@@ -71,12 +121,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
     public function testFailToGetRaw() {
         $container = new Container();
 
-        $this->assertInstanceOf(IceCreamDI\Tests\Fixtures\Service::class, $container->raw('other'));
+        $container->raw('other');
     }
 
-    /**
-     * @group extend
-     */
     public function testExtendable() {
         $container = new Container();
 
