@@ -28,6 +28,20 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
         $this->assertInstanceOf(IceCreamDI\Tests\Fixtures\Service::class, $container['service']);
     }
 
+    public function testServiceObjectShouldHaveInstanceOfContainer() {
+        $container = new Container();
+
+        $container['service'] = function($c) {
+            $service = new Service();
+
+            $service->example = $c;
+
+            return $service;
+        };
+
+        $this->assertInstanceOf(IceCreamDI\Container::class, $container['service']->example);
+    }
+
     public function testServiceIsRegisteredInTheContainer() {
         $container = new Container();
 

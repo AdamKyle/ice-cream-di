@@ -79,12 +79,12 @@ class Container implements \ArrayAccess {
         }
 
         if (isset($this->_factoryContainer[$this->_container[$name]])) {
-            return $this->_container[$name]();
+            return $this->_container[$name]($this);
         }
 
         $this->_frozenInTime[$name] = true;
 
-        return $this->_container[$name]();
+        return $this->_container[$name]($this);
     }
 
     /**
