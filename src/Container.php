@@ -138,8 +138,8 @@ class Container implements \ArrayAccess {
     public function extend(string $name, callable $callback) {
         $object = $this->_container[$name];
 
-        $extend = function() use ($callback, $object) {
-            return $callback($object());
+        $extend = function($c) use ($callback, $object) {
+            return $callback($object($c), $c);
         };
 
         $this[$name] = $extend;

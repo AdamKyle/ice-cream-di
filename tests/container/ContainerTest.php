@@ -154,4 +154,20 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
         $this->assertInstanceOf(IceCreamDI\Tests\Fixtures\Service::class, $container['service']);
         $this->assertEquals('hello', $container['service']->example);
     }
+
+    public function testExtendableHasInstanceOfContainer() {
+        $container = new Container();
+
+        $container['service'] = function() {
+            return new Service();
+        };
+
+        $container->extend('service', function($service, $c) {
+            $service->example = $c;
+
+            return $service;
+        });
+
+        $this->assertInstanceOf(IceCreamDI\Container::class, $container['service']->example);
+    }
 }
