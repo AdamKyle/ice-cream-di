@@ -1,6 +1,11 @@
 
 # Ice Cream DI
 
+[![Build Status](https://travis-ci.org/AdamKyle/ice-cream-di.svg?branch=1.0.0)](https://travis-ci.org/AdamKyle/ice-cream-di)
+[![Packagist](https://img.shields.io/packagist/v/ice-cream/di.svg?style=flat)](https://packagist.org/packages/ice-cream/di)
+[![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)]()
+[![Made With Love](https://img.shields.io/badge/Made%20With-Love-green.svg)]()
+
 Requires PHP 7.0+
 
 I wanted a simple and effective way to replicate [pimple](http://pimple.sensiolabs.org/#modifying-services-after-definition) and create DI at it's most basic level.
