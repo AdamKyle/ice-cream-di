@@ -170,4 +170,65 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 
         $this->assertInstanceOf(IceCreamDI\Container::class, $container['service']->example);
     }
+
+    public function testResolvingAFactory() {
+        $container = new Container();
+
+        $container['service_params'] = [
+            'service' => new Service()
+        ];
+
+        $container['service'] = $container->createFactory(function(Service $service, $c) {
+            $service->example = $c;
+
+            return $service;
+        });
+
+        $factoryInstance = $container->resolveFactory('service', 'service_params');
+
+        $this->assertInstanceOf(IceCreamDI\Container::class, $factoryInstance->example);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCantFindNameToResolve() {
+        $container = new Container();
+        $container->resolveFactory('service', 'service_params');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCantFindParamsToResolve() {
+        $container = new Container();
+
+        $container['service'] = 'bob';
+
+        $container->resolveFactory('service', 'service_params');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testTryingToResolveNonObjectShouldFail() {
+        $container = new Container();
+
+        $container['service'] = 'bob';
+        $container['service_params'] = ['bob' => 'bob'];
+
+        $container->resolveFactory('service', 'service_params');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCantFindFactoryToResolve() {
+        $container = new Container();
+
+        $container['service'] = function() { return new Service(); };
+        $container['service_params'] = ['bob' => 'bob'];
+
+        $container->resolveFactory('service', 'service_params');
+    }
 }

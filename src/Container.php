@@ -144,4 +144,41 @@ class Container implements \ArrayAccess {
 
         $this[$name] = $extend;
     }
+
+    /**
+     * Resolve a factory instance.
+     *
+     * Resolves a factory instance by passing in specific set of params.
+     *
+     * Always gives you a new instance.
+     *
+     * @param string $name       - Name of the object in the container,
+     *                             which is compared against that in the
+     *                             factory container.
+     * @param string $paramsName - Name of the parameters object (an array)
+     *                             in the main container.
+     * @throws InvalidArgumentException
+     *
+     */
+    public function resolveFactory(string $name, string $paramsName) {
+
+        if(!isset($this->_container[$name])) {
+            throw new \InvalidArgumentException($name . ' does not exist in the container.');
+        }
+
+        if (!isset($this->_container[$paramsName])) {
+            throw new \InvalidArgumentException($paramsName . ' does not exist in the container.');
+        }
+
+        if (!is_object($this->_container[$name])) {
+            throw new \InvalidArgumentException($paramsName . ' does not return an object.');
+        }
+
+        if (!isset($this->_factoryContainer[$this->_container[$name]])) {
+            throw new \InvalidArgumentException($name . ' does not exist in the factory container.');
+        }
+
+        $this->_container[$paramsName]['containerInstance'] = $this;
+        return call_user_func_array($this->_container[$name], $this->_container[$paramsName]);
+    }
 }

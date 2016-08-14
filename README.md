@@ -29,20 +29,26 @@ use IceCreamDI\Container;
 
 $container = Container();
 
-$container['service'] = function() {
+$container['service'] = function($c) {
   return new Service();
 }
 
 $container['services'] // Returns instance of Service class.
 ```
 
+> ATTN!!
+>
+> We pass the instance of the container to all of our closures, this is exactly like pimple.
+> Even when it comes to extending the already registered service provider you can be sure
+> that the new extension will also have the container object.
+
 Even more simpler:
 
 ```php
 $container = new Container([
-  'app.service' => function ({
+  'app.service' => function ($c) {
     return new Service();
-  });
+  },
 ]);
 ```
 
@@ -56,7 +62,7 @@ $container = new Container([
 >
 > ```php
 > $container = new Container();
-> $container['service'] = function () { return new Service(); };
+> $container['service'] = function ($c) { return new Service(); };
 >
 > $service = $container['service'];
 >
@@ -72,7 +78,7 @@ use IceCreamDI\Container;
 
 $container = Container();
 
-$container['service'] = function() {
+$container['service'] = function($c) {
   return new Service();
 }
 
@@ -94,7 +100,7 @@ use IceCreamDI\Container;
 
 $container = Container();
 
-$container['service'] = function() {
+$container['service'] = function($c) {
   return new Service();
 }
 
@@ -108,11 +114,35 @@ use IceCreamDI\Container;
 
 $container = Container();
 
-$container['session'] = $container->factory(function() {
+$container['service'] = $container->factory(function($c) {
   return new $service();
 });
 
-$container['session']; // => Will be a new instance every time.
+$container['service']; // => Will be a new instance every time.
 ```
 
-Where as with the the regular `$container['session']` you will always get the same object back.
+Where as with the the regular `$container['service']` you will always get the same object back.
+
+What if you have a factory that has dependencies? For example, assume you have a class that each time it's called,
+you need to inject dependencies into the class. You can use the `resolveFactory` method:
+
+```php
+use IceCreamDI\Container;
+
+$container = Container();
+
+$container['service_deps'] = [
+  'dep1' => ...,
+  ...
+];
+
+// Notice how you even have access to the containe object $c.
+$container['service'] = $container->factory(function($dep1, $dep2, ..., $c) {
+  return new $service($dep1, $dep2, ...);
+});
+
+$container->resolveFactory('service', 'service_deps'); // Gives you a new service instance with deps passed in.
+```
+
+As you see above we inject the dependencies. We even add on an addition dependency which is the `$c` container object
+dependency so that the registered factory that will be resolved has a instance of the container.
