@@ -1,7 +1,7 @@
 
 # Ice Cream DI
 
-[![Build Status](https://travis-ci.org/AdamKyle/ice-cream-di.svg?branch=1.0.0)](https://travis-ci.org/AdamKyle/ice-cream-di)
+[![Build Status](https://travis-ci.org/AdamKyle/ice-cream-di.svg?branch=master)](https://travis-ci.org/AdamKyle/ice-cream-di)
 [![Packagist](https://img.shields.io/packagist/v/ice-cream/di.svg?style=flat)](https://packagist.org/packages/ice-cream/di)
 [![Maintenance](https://img.shields.io/maintenance/yes/2016.svg)]()
 [![Made With Love](https://img.shields.io/badge/Made%20With-Love-green.svg)]()
