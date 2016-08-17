@@ -27,7 +27,7 @@ The following is a super basic example of how to use the container.
 ```php
 use IceCreamDI\Container;
 
-$container = Container();
+$container = new Container();
 
 $container['service'] = function($c) {
   return new Service();
