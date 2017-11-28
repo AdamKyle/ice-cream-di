@@ -231,4 +231,38 @@ class ContainerTest extends \PHPUnit_Framework_TestCase {
 
         $container->resolveFactory('service', 'service_params');
     }
+
+    public function testCallAMethodOnAClass() {
+        $container = new Container();
+
+        $container['service'] = function() { return new Service(); };
+
+        $response = $container->callMethod('service', 'process');
+
+        $this->assertEquals('hello world', $response);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCallOnNonRegisteredClass() {
+        $container = new Container();
+
+        $response = $container->callMethod('xxx', 'process');
+
+        $this->assertEquals('hello world', $response);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testCallOnRegisteredClassWithNoMethod() {
+        $container = new Container();
+
+        $container['service'] = function() { return new Service(); };
+
+        $response = $container->callMethod('service', 'xxxx');
+
+        $this->assertEquals('hello world', $response);
+    }
 }

@@ -146,3 +146,15 @@ $container->resolveFactory('service', 'service_deps'); // Gives you a new servic
 
 As you see above we inject the dependencies. We even add on an addition dependency which is the `$c` container object
 dependency so that the registered factory that will be resolved has a instance of the container.
+
+We can also call a method on a container object:
+
+```php
+use IceCreamDI\Container;
+
+$container = Container();
+
+$container['service'] = function() { return new Service(); };
+
+$container->call('service', 'process'); // Same as doing: $container['service']->process();
+```

@@ -97,6 +97,29 @@ class Container implements \ArrayAccess {
     }
 
     /**
+     * Call a method on a container instance of the object.
+     *
+     * Search the container for a name, assumeing we find one, we can then
+     * call the method name passed in and return the results.
+     *
+     * @param string $name
+     * @param string $method
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
+    public function callMethod(string $name, string $method) {
+        if (!isset($this->_container[$name])) {
+            throw new \InvalidArgumentException($name . ' is not registered any where in the container.');
+        }
+
+        if (!method_exists($this[$name], $method)) {
+            throw new \InvalidArgumentException($method . ' does not exist on ' . $name);
+        }
+
+        return $this[$name]->$method();
+    }
+
+    /**
      * Get the raw container object.
      *
      * The class definition returned via this call will
