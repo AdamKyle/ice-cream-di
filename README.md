@@ -3,16 +3,21 @@
 
 [![Build Status](https://travis-ci.org/AdamKyle/ice-cream-di.svg?branch=master)](https://travis-ci.org/AdamKyle/ice-cream-di)
 [![Packagist](https://img.shields.io/packagist/v/ice-cream/di.svg?style=flat)](https://packagist.org/packages/ice-cream/di)
-[![Maintenance](https://img.shields.io/maintenance/yes/2017.svg)]()
+[![Maintenance](https://img.shields.io/maintenance/yes/2018.svg)]()
 [![Made With Love](https://img.shields.io/badge/Made%20With-Love-green.svg)]()
 
-Requires PHP 7.0+
+- Requires PHP 7.2.x
+- Is Standalone
 
 I wanted a simple and effective way to replicate [pimple](http://pimple.sensiolabs.org/#modifying-services-after-definition) and create DI at it's most basic level.
 
 The core concept is simple, you have a container that you can add items to and fetch via the [ArrayAccess](http://php.net/manual/en/class.arrayaccess.php) interface.
 
 We also allow you to create factories, which allow you to return new instances of the object each time instead of the same object every time.
+
+## Documentation
+
+You can view this packages documentation [here](https://github.com/AdamKyle/ice-cream-di/blob/master/docs/ApiIndex.md)
 
 ## Philosophy
 

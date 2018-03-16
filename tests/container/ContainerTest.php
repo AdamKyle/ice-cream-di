@@ -3,8 +3,9 @@
 use IceCreamDI\Container;
 
 use IceCreamDI\Tests\Fixtures\Service;
+use PHPUnit\Framework\TestCase;
 
-class ContainerTest extends \PHPUnit_Framework_TestCase {
+class ContainerTest extends TestCase {
 
     public function testRegisterParamsViaConstructor() {
         $container = new Container(['param' => 'foo']);

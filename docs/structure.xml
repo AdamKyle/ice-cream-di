@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project title="API Documentation" version="2.8.5">
+  <partials/>
+  <file path="Container.php" generated-path="Container.html" hash="c858fe067870f48d4becf09177801fed" package="Default">
+    <docblock line="0">
+      <description></description>
+      <long-description></long-description>
+      <tag name="package" line="0" description="Default"/>
+    </docblock>
+    <class final="false" abstract="false" namespace="IceCreamDI" line="5" package="Default">
+      <extends/>
+      <implements>\ArrayAccess</implements>
+      <name>Container</name>
+      <full_name>\IceCreamDI\Container</full_name>
+      <docblock line="5">
+        <description></description>
+        <long-description></long-description>
+        <tag name="package" line="5" description="Default"/>
+      </docblock>
+      <property static="false" visibility="private" namespace="IceCreamDI" line="7" package="Default">
+        <name>$_container</name>
+        <full_name>\IceCreamDI\Container::_container</full_name>
+        <default>array()</default>
+        <docblock line="7">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </property>
+      <property static="false" visibility="private" namespace="IceCreamDI" line="8" package="Default">
+        <name>$_frozenInTime</name>
+        <full_name>\IceCreamDI\Container::_frozenInTime</full_name>
+        <default>array()</default>
+        <docblock line="8">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </property>
+      <property static="false" visibility="private" namespace="IceCreamDI" line="9" package="Default">
+        <name>$_factoryContainer</name>
+        <full_name>\IceCreamDI\Container::_factoryContainer</full_name>
+        <default></default>
+        <docblock line="9">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+      </property>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="11" package="Default">
+        <name>__construct</name>
+        <full_name>\IceCreamDI\Container::__construct()</full_name>
+        <docblock line="11">
+          <description></description>
+          <long-description></long-description>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$values</name>
+          <default>array()</default>
+          <type>array</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="34" package="Default">
+        <name>offsetSet</name>
+        <full_name>\IceCreamDI\Container::offsetSet()</full_name>
+        <docblock line="34">
+          <description>Register a callable function to the container.</description>
+          <long-description>By making the developer pass in a callable function as the named
+item to be registered, this allows more flexabillity over how the item
+is handled when returned.
+
+It gives the developer more freedom to specify specifically what should happen
+when registering an item.</long-description>
+          <tag name="param" line="34" description="&lt;ul&gt;&#10;&lt;li&gt;registered item's name. Needs to be unique.&lt;/li&gt;&#10;&lt;/ul&gt;" type="string" variable="$name">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="34" description="&lt;ul&gt;&#10;&lt;li&gt;registered callable.&lt;/li&gt;&#10;&lt;/ul&gt;" type="callable" variable="$func">
+            <type>callable</type>
+          </tag>
+          <tag name="return" line="34" description="$this  - instance of Container" type="\IceCreamDI\Container">
+            <type>\IceCreamDI\Container</type>
+          </tag>
+          <tag name="throws" line="34" description="" type="\IceCreamDI\InvalidArgumentException">
+            <type>\IceCreamDI\InvalidArgumentException</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$name</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$func</name>
+          <default></default>
+          <type>callable</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="48" package="Default">
+        <name>offsetExists</name>
+        <full_name>\IceCreamDI\Container::offsetExists()</full_name>
+        <docblock line="48">
+          <description>Does the item exist in the container?</description>
+          <long-description></long-description>
+          <tag name="param" line="48" description="&lt;ul&gt;&#10;&lt;li&gt;name of item in the container.&lt;/li&gt;&#10;&lt;/ul&gt;" type="string" variable="$name">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="48" description="" type="boolean">
+            <type>boolean</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$name</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="57" package="Default">
+        <name>offsetUnset</name>
+        <full_name>\IceCreamDI\Container::offsetUnset()</full_name>
+        <docblock line="57">
+          <description>Remove an item from the container.</description>
+          <long-description></long-description>
+          <tag name="param" line="57" description="&lt;ul&gt;&#10;&lt;li&gt;name of item to be removed.&lt;/li&gt;&#10;&lt;/ul&gt;" type="string" variable="$name">
+            <type>string</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$name</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="71" package="Default">
+        <name>offsetGet</name>
+        <full_name>\IceCreamDI\Container::offsetGet()</full_name>
+        <docblock line="71">
+          <description>Get the object from the container based on name.</description>
+          <long-description>If the same object exists in the factory container we will return that
+instead.</long-description>
+          <tag name="param" line="71" description="&lt;ul&gt;&#10;&lt;li&gt;The name of the object in the container.&lt;/li&gt;&#10;&lt;/ul&gt;" type="string" variable="$name">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="71" description="or false." type="callable">
+            <type>callable</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$name</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="95" package="Default">
+        <name>getContainer</name>
+        <full_name>\IceCreamDI\Container::getContainer()</full_name>
+        <docblock line="95">
+          <description>Get the container instance as it currently is.</description>
+          <long-description></long-description>
+          <tag name="return" line="95" description="" type="array">
+            <type>array</type>
+          </tag>
+        </docblock>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="110" package="Default">
+        <name>callMethod</name>
+        <full_name>\IceCreamDI\Container::callMethod()</full_name>
+        <docblock line="110">
+          <description>Call a method on a container instance of the object.</description>
+          <long-description>Search the container for a name, assumeing we find one, we can then
+call the method name passed in and return the results.</long-description>
+          <tag name="param" line="110" description="" type="string" variable="$name">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="110" description="" type="string" variable="$method">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="110" description="" type="mixed">
+            <type>mixed</type>
+          </tag>
+          <tag name="throws" line="110" description="" type="\InvalidArgumentException">
+            <type>\InvalidArgumentException</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$name</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$method</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="134" package="Default">
+        <name>raw</name>
+        <full_name>\IceCreamDI\Container::raw()</full_name>
+        <docblock line="134">
+          <description>Get the raw container object.</description>
+          <long-description>The class definition returned via this call will
+consititue as the raw return value.
+
+This is the non instantiated return value.</long-description>
+          <tag name="param" line="134" description="&lt;ul&gt;&#10;&lt;li&gt;name of the container object&lt;/li&gt;&#10;&lt;/ul&gt;" type="string" variable="$name">
+            <type>string</type>
+          </tag>
+          <tag name="return" line="134" description="deffinition" type="\IceCreamDI\class">
+            <type>\IceCreamDI\class</type>
+          </tag>
+          <tag name="throws" line="134" description="" type="\IceCreamDI\InvalidArgumentException">
+            <type>\IceCreamDI\InvalidArgumentException</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$name</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="149" package="Default">
+        <name>createFactory</name>
+        <full_name>\IceCreamDI\Container::createFactory()</full_name>
+        <docblock line="149">
+          <description>Allows you to create callable factories.</description>
+          <long-description></long-description>
+          <tag name="param" line="149" description="&lt;ul&gt;&#10;&lt;li&gt;closure&lt;/li&gt;&#10;&lt;/ul&gt;" type="callable" variable="$callable">
+            <type>callable</type>
+          </tag>
+          <tag name="return" line="149" description="" type="callable">
+            <type>callable</type>
+          </tag>
+          <tag name="throws" line="149" description="" type="\IceCreamDI\InvalidArgumentException">
+            <type>\IceCreamDI\InvalidArgumentException</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$callable</name>
+          <default></default>
+          <type>callable</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="161" package="Default">
+        <name>extend</name>
+        <full_name>\IceCreamDI\Container::extend()</full_name>
+        <docblock line="161">
+          <description>Allows you to extend a registered object in the container.</description>
+          <long-description></long-description>
+          <tag name="param" line="161" description="&lt;ul&gt;&#10;&lt;li&gt;Name of item in container&lt;/li&gt;&#10;&lt;/ul&gt;" type="String" variable="$name">
+            <type>String</type>
+          </tag>
+          <tag name="param" line="161" description="&lt;ul&gt;&#10;&lt;li&gt;closure function&lt;/li&gt;&#10;&lt;/ul&gt;" type="Callable" variable="$callable">
+            <type>Callable</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$name</name>
+          <default></default>
+          <type>String</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$callback</name>
+          <default></default>
+          <type>callable</type>
+        </argument>
+      </method>
+      <method final="false" abstract="false" static="false" visibility="public" namespace="IceCreamDI" line="186" package="Default">
+        <name>resolveFactory</name>
+        <full_name>\IceCreamDI\Container::resolveFactory()</full_name>
+        <docblock line="186">
+          <description>Resolve a factory instance.</description>
+          <long-description>Resolves a factory instance by passing in specific set of params.
+
+Always gives you a new instance.</long-description>
+          <tag name="param" line="186" description="&lt;ul&gt;&#10;&lt;li&gt;Name of the object in the container,&#10;which is compared against that in the&#10;factory container.&lt;/li&gt;&#10;&lt;/ul&gt;" type="string" variable="$name">
+            <type>string</type>
+          </tag>
+          <tag name="param" line="186" description="&lt;ul&gt;&#10;&lt;li&gt;Name of the parameters object (an array)&#10;in the main container.&lt;/li&gt;&#10;&lt;/ul&gt;" type="string" variable="$paramsName">
+            <type>string</type>
+          </tag>
+          <tag name="throws" line="186" description="" type="\IceCreamDI\InvalidArgumentException">
+            <type>\IceCreamDI\InvalidArgumentException</type>
+          </tag>
+        </docblock>
+        <argument line="0" by_reference="false">
+          <name>$name</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+        <argument line="0" by_reference="false">
+          <name>$paramsName</name>
+          <default></default>
+          <type>string</type>
+        </argument>
+      </method>
+    </class>
+    <parse_markers>
+      <error line="0" code="PPC:ERR-50000">No summary was found for this file</error>
+      <error line="5" code="PPC:ERR-50005">No summary for class \IceCreamDI\Container</error>
+      <error line="11" code="PPC:ERR-50015">Argument $values is missing from the Docblock of __construct</error>
+      <error line="11" code="PPC:ERR-50008">No summary for method __construct()</error>
+      <error line="161" code="PPC:ERR-50014">Name of argument $callback does not match with the DocBlock's name $callable in extend()</error>
+      <error line="161" code="PPC:ERR-50016">The type hint of the argument is incorrect for the type definition of the @param tag with argument $callback in extend()</error>
+      <notice line="161" code="PPC:ERR-50013">Parameter $callable could not be found in extend()</notice>
+      <error line="7" code="PPC:ERR-50007">No summary for property $_container</error>
+      <error line="8" code="PPC:ERR-50007">No summary for property $_frozenInTime</error>
+      <error line="9" code="PPC:ERR-50007">No summary for property $_factoryContainer</error>
+    </parse_markers>
+    <source>eJzVWEtv20YQvutXbAEBpgLJuVe1U9dOAx/qAnF6cgJhRY6kbcgly11aVor8987sg1qRIsXEboHq4Ie4O/PN45sHf3pTbIrRSPIMVMFjYLcxXJfAs5vb+WgUp1wpdp1LzYWEkomsSCEDqRX7eFWWfHcVx4An/h6NGH6KUjxyDWy8iOsr+LlgD5/mjQOrMv8C8lZ+EBkcP8BjnZe7WvfcqaiWqYjZqpKxFrlkC1KldFnFOuKEiI0feVqBMkIniIy5z1hvhJpdtgTjQQlb9vG+SH9f/gmxvsfHfA3RxKmkzypHn8QbFnnpXDlFd5wMuHT/hQoDpflqpUDfg472l6b+yry+8XVkf5pfr1+9sg9esfewFkojVM5inqZ8mcLeAzpnegOs9vi5u+Uv/7JjGf8s5NocS+AR0rxAWQWFVsijMtE6OkxZkXg5QkNGypbASocHkikjAxkKyLeKZegltkrhiS9Fmgq9Y/kjatrkWyOOJNTSFNtwmaSQsO0GJIrUVSkhaaK/1WwtHkE1wFtNJUCSG1CqgFisdu63IIt2KJhrpjZ5lSaorChAeqlOpbWCXMOlQdfU/nPBS54xhglGp8bkEPNoFvjA3DxTxlvn7A4xKeenSoq/KjhvSqv9PSaHN6X5p/tr1jcBDU1W0TWBqc8lsjZf7R/X9/SmpKjcSswzkVyV64qo+/YphoKi7M69PsqrIGOlTVZ6FKa3WLFIKEUnPLMCTj+Ya58mTUIYTJZwXbisRnbOztBIKxPjQ46RMtfk14xLUVQpFoqE5aVJslIkCcjzswM2tbhfk8TBQ+4bu+YdxLvJXeaZ5IcnjBFR5oBvb4bkzMxkB4XJSGrKaMV6mecp8CEhekuglPXZ5EdzMXC5E3cYp6YXJl3mv4cMfevJQbHI+muNs73PdF9BSHLN9j4D/5DKZ2GYTJU8lXrzjrODzX8H2pibm7ZwxHy25IpSUFruN0vXypxWxnorwmSQ8uF3nSiQtwW2xcrpw6axgNUFE6kOvFUfO7Ltg6ve5PbAhJN5V5cmpNWKpwqGROhdGJ+D+vDDicR7VnWgHkIFIaidXFLVxz/blnZUBodyYR00HKnzV9f5Tl2NitmYRR665H0zAKuivxoeIQ0WRJylIJh8vkVPN4X2KV63LJwxhGZxVZYYXuzWQrVy2+k2c11vHq5B1z6MsAraSbBVBltGdMG+RhrgYJSB3uSG3/yYBQfcaoK/B17iwHhoPI6RKMo2VBy/MLOJtMj6lZCkB7/Gf7DR0b16WiFSGkEOjyEAjW80e9jeWBcMKq2qSnXbme3S3PHIamkGIRNP+1nQjxadLO2NFtnzm1EShXCmDQTNYeN/Ukws+AW4vkxoHcJpbdl3QXXRJ7AJzSUE144k6NMz/N7W4KPIQgI4NLNLJzE6yd6Sb4MkPp7v1HHsupgAZrMwkfZTPXsU3G4KJpepx9XJjesbHtYV+K2DtDm8ZkFqa0I5wm0oqMTyUQszDvZdPDGZHVLVWtnqj95Cb+KLDNto8QET/tvMvzlMpqHJPqgDtnPqyq6Ku7yiUTDGtVpDsIGahiigq3wFu1P91wyjkquqhFaw3IkXiZFF+qtt2FEbBnad+svTLx1ml1xrHm+i/f0jPdc/G+ZLeNKArYCHNezE3Nfw7n1zzTWfGbtr7C5xa9W096/bwTH3XXxqZ/Y62prR6AyH/l7y+PPBqx1n5kVPNu4POz9d1CoxCBNWKWBRLX3qZXaNXf5gNPaTYzzBS3HIlXlj5AqWTouhe+9SeUqLV70i+JmjGTh3Uh05ypY7MySQFzFm/s0Iw0pCsTQRa9HsKt3ynXKvXCivuCkjXeqP7XvNpOlZP6ZeTt9nuxE4R1HryDNUR415zQmQWY+czCGCWutW88WMN8O65s52h9AM8wCQWcpbFHE3nk6GIHD2Zzzk0B7FsPLU30lsPvgydXy82tvXWNj+5UaTfF+j6e+Ae2O+E14Q7eeD/OY98lkQ/X4k/Uw23IPP2DxfIuhtLg5/cxdE/OGs/v7WlaizT74N7OUF88AC63y5IL4sDG87IzU9oboemr+O/gHxj69+</source>
+  </file>
+  <package name="Default" full_name="Default"/>
+  <package name="global" full_name="global"/>
+  <namespace name="IceCreamDI" full_name="IceCreamDI"/>
+  <deprecated count="0"/>
+</project>
